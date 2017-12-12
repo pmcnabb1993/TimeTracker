@@ -17,15 +17,29 @@ var config = {
   //Global variable
   var timeRemainder = 0;
 
+  //Real time clock
+    function displayTime() {
+      var time = moment().format('MMMM Do YYYY:  h:mm:ss A');
+      $('#clock').html(time);
+      setTimeout(displayTime, 1000);
+    }
+    $(document).ready(function(){
+        displayTime();
+    });
+
   database.ref().orderByChild("inputDest").on("child_added", function (snapshot){
       console.log('here')
 
       //First train//
-      var firstTimeCoverted = moment(snapshot.val().inputFirst, "HHmm").subtract(1,"years");
+      var firstTimeCoverted = moment(snapshot.val().inputFirst, "hh:mm A").subtract(1,"years");
 
       //Creates a variable for the current time//
       var currentTime = moment();
+
       console.log("Current Time: " + currentTime);
+
+      //var displayTime = moment().format('D. MMMM YYYY hh:mm:ss A');
+      //console.log(displayTime)
 
       //Creates a variable for the differnece between current and first time//
       var diffTime = currentTime.diff(moment(firstTimeCoverted), "minutes");
@@ -44,7 +58,7 @@ var config = {
 
       //Variable to math the minutes away//
       var nextArrival = moment().add(minutesAway, "minutes");
-      console.log("Arrive at: " + moment(nextArrival).format("HHmm"));
+      console.log("Arrive at: " + moment(nextArrival).format("hh:mm A"));
 
       //Adds our inputs to the table//
       $('#dostuff').append(
@@ -53,7 +67,7 @@ var config = {
           <td id="table-name">${snapshot.val().inputName}</td>
           <td id="table-destination">${snapshot.val().inputDest}</td>
           <td id="table-frequency">${snapshot.val().inputFreq}</td>
-          <td id="table-next">${moment(nextArrival).format("HHmm")}</td>
+          <td id="table-next">${moment(nextArrival).format("hh:mm A")}</td>
           <td id="table-away">${minutesAway}</td>
           </td>`
       )
