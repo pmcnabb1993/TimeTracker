@@ -1,1 +1,14 @@
-Hello
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background: url("https://bootstrapbay.com/assets/img/color29.jpg") no-repeat center fixed; 
+    background-size: cover;
+}
+h2 {
+    font-weight: bold
+}
+
+.panel-title {
+    font-weight: bold;
+    text-decoration: underline;
+}
